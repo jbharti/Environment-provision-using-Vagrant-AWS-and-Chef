@@ -1,0 +1,8 @@
+---       	
+# Configured hosts
+VARIABLE:
+    HOST_NAME : 'MASTER-SETUP-1'    
+    #AWS_AMI: 'ami-0236f245e7b7dc9ed'
+    AWS_INSTANCE_TYPE: 't2.medium'        
+    AWS_PRIVATE_IP_ADDRESS : '10.0.15.29'        
+    AWS_COST : 'SKDevOps'    

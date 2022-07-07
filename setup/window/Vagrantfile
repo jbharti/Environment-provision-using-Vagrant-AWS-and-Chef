@@ -1,0 +1,37 @@
+require 'yaml'
+
+commonConfig = YAML::load(File.read('../../common-vagrant-properties.yaml'))
+varConfig = YAML::load(File.read('Vagrantfile.yaml'))
+
+Vagrant.configure(commonConfig['CONSTANT']['VAGRANTFILE_API_VERSION']) do |config|
+	config.ssh.pty = true
+	config.vm.define varConfig['VARIABLE']['HOST_NAME'] do |app1|
+		app1.vm.hostname = varConfig['VARIABLE']['HOST_NAME'].downcase 
+		app1.vm.box = "dummy"		
+		app1.vm.synced_folder "./", "/vagrant", type: "winrm"
+		#setting aws app machine
+		app1.vm.provider :aws do |aws, override|          
+			override.nfs.functional = false
+			override.vm.communicator = :winrm
+			override.winrm.username = commonConfig['CONSTANT']['USERNAME']
+			override.winrm.password = commonConfig['CONSTANT']['PASSWORD']
+			
+			aws.access_key_id = commonConfig['CONSTANT']['AWS_ACCESS_KEY_ID']
+			aws.secret_access_key = commonConfig['CONSTANT']['AWS_SECRET_ACCESS_KEY']
+			aws.keypair_name = commonConfig['CONSTANT']['AWS_KEYPAIR_NAME']
+			aws.region = commonConfig['CONSTANT']['AWS_REGION']
+			aws.availability_zone = commonConfig['CONSTANT']['AWS_AVAILABILITY_ZONE']
+			aws.subnet_id = commonConfig['CONSTANT']['AWS_SUBNET_ID']
+			aws.security_groups = commonConfig['CONSTANT']['AWS_SECURITY_GROUPS']
+	
+			aws.ami = commonConfig['CONSTANT']['WINDOW_AWS_AMI']
+			aws.instance_type = varConfig['VARIABLE']['AWS_INSTANCE_TYPE']			
+			aws.private_ip_address = varConfig['VARIABLE']['AWS_PRIVATE_IP_ADDRESS']
+			aws.tags = {
+				'Name' => 'RTC-SK-'+varConfig['VARIABLE']['HOST_NAME'],
+				'Cost' => varConfig['VARIABLE']['AWS_COST']
+			}							
+		end
+
+	end
+end

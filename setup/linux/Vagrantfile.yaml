@@ -1,0 +1,8 @@
+---       	
+# Configured hosts
+VARIABLE:
+    HOST_NAME : 'APP-DB-SETUP-1'    
+    AWS_AMI: 'ami-0777777777777'
+    AWS_INSTANCE_TYPE: 't2.xlarge'        
+    AWS_PRIVATE_IP_ADDRESS : '10.10.59.4'        
+    AWS_COST : 'SKDevOps'    

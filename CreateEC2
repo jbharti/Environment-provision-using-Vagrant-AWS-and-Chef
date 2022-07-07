@@ -1,0 +1,55 @@
+env.WORKSPACE = "/data/devops/infra_automation/swiftkanban-automation"
+
+pipeline {
+    agent {
+        docker { image '0123456789.dkr.ecr.us-east-1.amazonaws.com/digite/vagrant_machine:1.0'
+                    label 'master'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
+                    args '-v /data/sahi_vagrant_repo/devops:/data/devops -u root -e "TZ=Asia/Kolkata"'
+        }
+    }
+    
+
+    parameters {
+		booleanParam(name: 'CREATE_SETUP', defaultValue: true, description: 'Check if you want to create master machine')		
+        string(name: 'AP_DB_VAGRANT_PATH', defaultValue:"sahi/swiftkanban-app-db-setup3", description: '')
+        
+    }
+    stages {
+
+			stage('Checkout INFRA-AUTOMATION code') {
+                steps {
+                        sh "cd /data/devops && git fetch"
+                        sh "cd /data/devops && git config --global user.name 'jp'"
+                        sh "cd /data/devops && git config --global user.email 'jp@vvv.com'"
+                        sh "cd /data/devops && git stash -a"
+                        sh "cd /data/devops && git pull origin master"
+                }
+            }
+
+			stage('Create Automation Machine') {
+				parallel {
+							stage('Create RTC-SK-APP-DB-SETUP') {
+								when {
+										expression { params.CREATE_SETUP == true }
+								}
+								steps {
+										script{
+											try{
+													sh 'chmod a+x /data/devops/jenkins/scripts/createEC2.sh'
+													sh "/data/devops/jenkins/scripts/createEC2.sh '$AP_DB_VAGRANT_PATH' '$WORKSPACE'"
+
+											}catch(Exception e){
+													echo 'Machine Creation got failed'
+													 build job: 'TerminateEC2'
+											}
+										}
+
+								}
+							}
+				}
+			}
+
+							
+   }
+}

@@ -1,0 +1,19 @@
+---
+# common parmeters
+CONSTANT:
+    USERNAME : 'Administrator'
+    PASSWORD : 'devops@2099'
+    AWS_ACCESS_KEY_ID : '#SET VALUE HERE#'
+    AWS_SECRET_ACCESS_KEY : '#SET VALUE HERE#'
+    AWS_KEYPAIR_NAME : 'AmazonCloudKeyPair'
+    AWS_REGION : 'us-east-1'	
+    AWS_AVAILABILITY_ZONE : 'us-east-1b'
+    PERF_AWS_AVAILABILITY_ZONE : 'us-east-1d'
+    AWS_SUBNET_ID : 'subnet-042f18ffdafbfec08'
+    PERF_AWS_SUBNET_ID : 'subnet-0977yhgt'
+    AWS_SECURITY_GROUPS : ['sg-04d9d625kkkkkkkk']
+    PERF_AWS_SECURITY_GROUPS : ['sg-14196171']
+    LINUX_AWS_AMI: 'ami-jjjjjjjjjjf198668922'
+    WINDOW_AWS_AMI: 'ami-kkkkkkf0264b01fef'
+    VAGRANTFILE_API_VERSION : '2'
+    BASE_PATH : 'D:/'
