@@ -2,7 +2,7 @@ env.WORKSPACE = "/data/devops/infra_automation/swiftkanban-automation"
 
 pipeline {
     agent {
-        docker { image '0123456789.dkr.ecr.us-east-1.amazonaws.com/digite/vagrant_machine:1.0'
+        docker { image 'vagrant_machine:1.0'
                     label 'master'
                     args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
                     args '-v /data/sahi_vagrant_repo/devops:/data/devops -u root -e "TZ=Asia/Kolkata"'
