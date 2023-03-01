@@ -2,7 +2,7 @@
 # common parmeters
 CONSTANT:
     USERNAME : 'Administrator'
-    PASSWORD : 'devops@2099'
+    PASSWORD : 'pass@2099'
     AWS_ACCESS_KEY_ID : '#SET VALUE HERE#'
     AWS_SECRET_ACCESS_KEY : '#SET VALUE HERE#'
     AWS_KEYPAIR_NAME : 'AmazonCloudKeyPair'
